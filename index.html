@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Happy Rose Day ✨</title>
+    <link rel="icon" type="img/jpg" href="https://c4.wallpaperflare.com/wallpaper/812/187/770/kimi-no-na-wa-tachibana-taki-miyamizu-mitsuha-anime-wallpaper-preview.jpg">
+</head>
+<body class="page1">
+    <!-- Background Music for Page 1 -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="music1.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="quiz-container">
+        <h1 class="greeting">Hello my cutie silly, kese ho?</h1>
+
+        <!-- Question 1 -->
+        <div class="question-wrapper" id="question1">
+            <h2 class="question-text">How are you feeling today?</h2>
+            <div class="options">
+                <button class="option-btn" data-question="1" data-answer="a">A. Bohot acchi hoon sir ji</button>
+                <button class="option-btn" data-question="1" data-answer="b">B. A</button>
+                <button class="option-btn" data-question="1" data-answer="c">C. B</button>
+                <button class="option-btn" data-question="1" data-answer="d">D. C</button>
+            </div>
+            <p class="feedback" id="feedback1"></p>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-wrapper hidden" id="question2">
+            <h2 class="question-text">Do you love me?</h2>
+            <div class="options">
+                <button class="option-btn" data-question="2" data-answer="a">A. Yes I do, ofc</button>
+                <button class="option-btn" data-question="2" data-answer="b">B. A</button>
+                <button class="option-btn" data-question="2" data-answer="c">C. B</button>
+                <button class="option-btn" data-question="2" data-answer="d">D. C</button>
+            </div>
+            <p class="feedback" id="feedback2"></p>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-wrapper hidden" id="question3">
+            <h2 class="question-text">What do you want to call me?</h2>
+            <div class="options">
+                <button class="option-btn" data-question="3" data-answer="a">A. Daddy</button>
+                <button class="option-btn" data-question="3" data-answer="b">B. Sir ji</button>
+                <button class="option-btn" data-question="3" data-answer="c">C. Sweetie</button>
+                <button class="option-btn" data-question="3" data-answer="d">D. Manas</button>
+            </div>
+            <p class="feedback" id="feedback3"></p>
+        </div>
+
+        <!-- Continue Button (hidden initially) -->
+        <button class="continue-btn hidden" id="continueBtn" onclick="window.location.href='rose.html'">
+            Continue to Your Surprise ✨
+        </button>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
