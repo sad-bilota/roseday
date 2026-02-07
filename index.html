@@ -8,13 +8,21 @@
     <link rel="icon" type="img/jpg" href="https://c4.wallpaperflare.com/wallpaper/812/187/770/kimi-no-na-wa-tachibana-taki-miyamizu-mitsuha-anime-wallpaper-preview.jpg">
 </head>
 <body class="page1">
-    <!-- Background Music for Page 1 - Playing music1.mp3 -->
-    <audio id="bgMusic" autoplay loop>
+    <!-- Background Music for Page 1 -->
+    <audio id="bgMusic" loop preload="auto">
         <source src="./music1.mp3" type="audio/mpeg">
-        <source src="https://raw.githubusercontent.com/sad-bilota/roseday/main/music1.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="quiz-container">
+    <!-- Start Screen -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-content">
+            <h1 class="start-title">💕 Happy Rose Day 💕</h1>
+            <p class="start-subtitle">Click to start with music</p>
+            <button class="start-btn" id="startBtn">Start ✨</button>
+        </div>
+    </div>
+
+    <div class="quiz-container hidden" id="quizContainer">
         <h1 class="greeting">Hello my cutie silly, kese ho?</h1>
 
         <!-- Question 1 -->
@@ -53,12 +61,99 @@
             <p class="feedback" id="feedback3"></p>
         </div>
 
-        <!-- Continue Button (hidden initially) -->
-        <button class="continue-btn hidden" id="continueBtn" onclick="window.location.href='rose.html'">
+        <!-- Continue Button -->
+        <button class="continue-btn hidden" id="continueBtn">
             Continue to Your Surprise ✨
         </button>
     </div>
 
-    <script src="quiz.js"></script>
+    <script>
+        // Start button to enable music
+        document.getElementById('startBtn').addEventListener('click', function() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log('Audio play failed:', e));
+            
+            // Hide start screen, show quiz
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizContainer').classList.remove('hidden');
+        });
+
+        // Quiz Logic
+        let currentQuestion = 1;
+        const optionButtons = document.querySelectorAll('.option-btn');
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const questionNum = this.getAttribute('data-question');
+                const answer = this.getAttribute('data-answer');
+                
+                const currentButtons = document.querySelectorAll(`[data-question="${questionNum}"]`);
+                currentButtons.forEach(btn => btn.style.pointerEvents = 'none');
+                
+                this.classList.add('selected');
+                handleAnswer(questionNum, answer);
+            });
+        });
+
+        function handleAnswer(questionNum, answer) {
+            const feedbackElement = document.getElementById(`feedback${questionNum}`);
+            
+            if (questionNum === '1') {
+                feedbackElement.textContent = answer === 'a' ? 'Great choice! ❤️' : 'Nice! 😊';
+                feedbackElement.classList.add('show', 'correct');
+                setTimeout(() => transitionToQuestion(2), 2000);
+                
+            } else if (questionNum === '2') {
+                feedbackElement.textContent = answer === 'a' ? 'Aww, I love you too! 💕' : 'That\'s sweet! 💖';
+                feedbackElement.classList.add('show', 'correct');
+                setTimeout(() => transitionToQuestion(3), 2000);
+                
+            } else if (questionNum === '3') {
+                if (answer === 'a') {
+                    feedbackElement.textContent = 'Good girl, sweetie! ❤️';
+                    feedbackElement.classList.add('show', 'correct');
+                    setTimeout(() => showContinueButton(), 1500);
+                } else {
+                    feedbackElement.textContent = 'No babe, wrong option! Try again. 😤';
+                    feedbackElement.classList.add('show', 'wrong');
+                    
+                    setTimeout(() => {
+                        const currentButtons = document.querySelectorAll(`[data-question="3"]`);
+                        currentButtons.forEach(btn => {
+                            btn.style.pointerEvents = 'auto';
+                            btn.classList.remove('selected');
+                        });
+                        feedbackElement.classList.remove('show', 'wrong');
+                        feedbackElement.textContent = '';
+                    }, 2000);
+                }
+            }
+        }
+
+        function transitionToQuestion(nextQuestionNum) {
+            const currentQuestionElement = document.getElementById(`question${currentQuestion}`);
+            const nextQuestionElement = document.getElementById(`question${nextQuestionNum}`);
+            
+            currentQuestionElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentQuestionElement.classList.add('hidden');
+                currentQuestionElement.classList.remove('fade-out');
+                nextQuestionElement.classList.remove('hidden');
+                currentQuestion = nextQuestionNum;
+            }, 500);
+        }
+
+        function showContinueButton() {
+            const continueBtn = document.getElementById('continueBtn');
+            continueBtn.classList.remove('hidden');
+            setTimeout(() => continueBtn.classList.add('show'), 100);
+        }
+
+        // Continue to rose page
+        document.getElementById('continueBtn').addEventListener('click', function() {
+            window.location.href = 'rose.html';
+        });
+    </script>
 </body>
 </html>

@@ -8,10 +8,9 @@
     <link rel="icon" type="img/jpg" href="https://c4.wallpaperflare.com/wallpaper/812/187/770/kimi-no-na-wa-tachibana-taki-miyamizu-mitsuha-anime-wallpaper-preview.jpg">
 </head>
 <body class="page2">
-    <!-- Background Music for Page 2 - Playing song.mp3 -->
-    <audio autoplay loop>
+    <!-- Background Music for Page 2 -->
+    <audio id="page2Music" loop preload="auto">
         <source src="./song.mp3" type="audio/mpeg">
-        <source src="https://raw.githubusercontent.com/sad-bilota/roseday/main/song.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Left GIF -->
@@ -61,13 +60,30 @@
     </div>
 
     <script>
+        // Auto-play music on page load
+        window.addEventListener('load', function() {
+            const music = document.getElementById('page2Music');
+            music.play().catch(e => {
+                console.log('Audio autoplay blocked, will play on first interaction');
+                // If autoplay fails, play on first user interaction
+                document.body.addEventListener('click', function() {
+                    music.play();
+                }, { once: true });
+            });
+        });
+
         // Rose touch support for mobile
         const rose = document.getElementById('rose');
         rose.addEventListener('click', function() {
             this.classList.add('active');
+            // Also ensure music plays
+            document.getElementById('page2Music').play().catch(e => console.log(e));
         });
+        
         rose.addEventListener('touchstart', function() {
             this.classList.add('active');
+            // Also ensure music plays
+            document.getElementById('page2Music').play().catch(e => console.log(e));
         });
     </script>
 </body>
